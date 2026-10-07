@@ -1,0 +1,10 @@
+secret int key;
+public int x;
+
+if (key > 100) {
+    x = 10;
+} else {
+    x = 20;
+}
+
+print(x);

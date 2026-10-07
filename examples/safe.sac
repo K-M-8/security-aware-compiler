@@ -1,0 +1,6 @@
+public int a;
+public int b;
+public int x;
+
+x = a + b;
+print(x);

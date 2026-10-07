@@ -1,0 +1,5 @@
+secret int password;
+public int output;
+
+output = password + 10;
+print(output);
