@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinel | Security-Aware Compiler</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">S</div><div><b>SENTINEL</b><span>Compiler Lab</span></div></div>
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-item active" data-tab="analyzer"><span>⌘</span> Program Analyzer</button>
+      <button class="nav-item" data-tab="ir"><span>▤</span> Intermediate Code</button>
+      <button class="nav-item" data-tab="repair"><span>⤴</span> Repair Preview</button>
+      <div class="side-bottom"><div class="status-dot"></div><div><b>Local engine</b><small>Runs on this computer</small></div></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">COMPILER DESIGN PROJECT</div><h1>Security analysis workspace</h1></div>
+        <div class="top-actions"><span class="pill"><i></i> LOCAL MODE</span><button id="refreshExamples" class="icon-btn" title="Refresh examples">↻</button></div>
+      </header>
+
+      <section class="hero">
+        <div><div class="hero-kicker">STATIC ANALYSIS · INFORMATION FLOW · REPAIR</div>
+          <h2>Find the leak.<br><em>Understand the flow.</em></h2>
+          <p>Analyze .sac programs with your C++ compiler engine, inspect its output, and review supported repair suggestions.</p>
+        </div>
+        <div class="hero-symbol"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="core">⌁</div><span class="node node-a"></span><span class="node node-b"></span><span class="node node-c"></span></div>
+      </section>
+
+      <section class="metrics">
+        <article class="metric-card"><div class="metric-top"><span>ANALYSIS STATUS</span><b class="metric-icon">◉</b></div><strong id="statusMetric">Ready</strong><small id="statusSub">Waiting for a run</small></article>
+        <article class="metric-card"><div class="metric-top"><span>FINDING SIGNALS</span><b class="metric-icon amber">!</b></div><strong id="findingMetric">—</strong><small>Mentions detected in engine output</small></article>
+        <article class="metric-card"><div class="metric-top"><span>SECRET LABELS</span><b class="metric-icon purple">◈</b></div><strong id="secretMetric">—</strong><small>SECRET mentions in engine output</small></article>
+        <article class="metric-card"><div class="metric-top"><span>REPAIR OUTPUT</span><b class="metric-icon green">↗</b></div><strong id="repairMetric">—</strong><small>Whether a transformed file was produced</small></article>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="panel analyzer-panel">
+          <div class="panel-head"><div><span class="section-number">01</span><h3>Program input</h3></div><span class="subtle">SOURCE FILE</span></div>
+          <div class="field-label">Choose an example</div>
+          <div class="input-row"><select id="exampleSelect">{% for example in examples %}<option value="{{ example }}">{{ example }}</option>{% endfor %}</select><button id="loadExample" class="button secondary">Load</button></div>
+          <div class="divider"><span>OR PASTE YOUR OWN PROGRAM</span></div>
+          <textarea id="sourceInput" spellcheck="false" placeholder="// Paste a .sac program here to analyze it..."></textarea>
+          <div class="input-foot"><span>Language: <b>.sac</b></span><span id="sourceCount">0 characters</span></div>
+          <button id="analyzeBtn" class="button primary"><span>▶</span> Analyze program <b>→</b></button>
+          <p class="tiny-note">Runs your existing C++ engine locally. Only use source code you trust.</p>
+        </div>
+
+        <div class="panel terminal-panel">
+          <div class="panel-head"><div><span class="section-number">02</span><h3>Execution console</h3></div><button id="clearConsole" class="text-button">Clear</button></div>
+          <div class="terminal-bar"><div class="traffic"><i></i><i></i><i></i></div><span>security_compiler.exe</span><span class="terminal-live" id="terminalLive">IDLE</span></div>
+          <div class="terminal-body" id="console"><div class="terminal-welcome"><span class="prompt">$</span> Ready to run static analysis.<br><span class="muted">Select an example or paste a .sac program, then Analyze.</span></div></div>
+          <div class="terminal-foot"><span><i class="status-dot"></i> <span id="engineState">Engine ready to initialize</span></span><span id="returnCode">EXIT —</span></div>
+        </div>
+      </section>
+
+      <section class="panel results-panel">
+        <div class="panel-head"><div><span class="section-number">03</span><h3>Analysis results</h3></div><span class="subtle" id="resultName">NO RUN YET</span></div>
+        <div class="tabs">
+          <button class="result-tab active" data-result="report">Security report</button>
+          <button class="result-tab" data-result="tac">Three-address code</button>
+          <button class="result-tab" data-result="repair">Transformed code</button>
+          <button class="result-tab" data-result="source">Source input</button>
+        </div>
+        <div class="result-content"><pre id="resultOutput" class="code-output"><span class="muted">Your compiler output will appear here after analysis.</span></pre></div>
+      </section>
+
+      <footer><span>Sentinel <b>·</b> Security-Aware Compiler for Timing-Leak Analysis</span><span>Educational prototype · Results depend on implemented analysis rules</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

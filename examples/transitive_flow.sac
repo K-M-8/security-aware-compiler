@@ -1,0 +1,7 @@
+secret int key;
+public int temp;
+public int result;
+
+temp = key + 10;
+result = temp * 2;
+print(result);
